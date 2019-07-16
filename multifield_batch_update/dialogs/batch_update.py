@@ -169,7 +169,7 @@ class BatchUpdateDialog(QDialog):
 
         hbox = QHBoxLayout()
         hbox.addWidget(QLabel("Define the mapping from file fields to note fields. "
-                              "Any file fileds mapping to nothing will be ignored."))
+                              "Any file fields mapping to nothing will be ignored."))
         yield hbox
 
     def _ui_field_select_rows(self):
