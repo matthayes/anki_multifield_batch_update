@@ -11,6 +11,10 @@ This is a plugin for [Anki](http://ankisrs.net/) that enables you to perform upd
 * Can generate a colorfull diff in an HTML file with red and green highlighting to clearly show what will be changed for each note.
 * Logs all changes that have been made to a local SQLite3 database.  The full history can be exported to a CSV file so that old values can be recovered.
 
+<img src="https://raw.githubusercontent.com/matthayes/anki_multifield_batch_update/master/screenshots/batch_update_dialog.png">
+
+<img src="https://raw.githubusercontent.com/matthayes/anki_multifield_batch_update/master/screenshots/batch_update_diff.png">
+
 ## Performing the Update
 
 You need to prepare a CSV file with the updates to be made.  Most spreadsheet software such as Microsoft Excel and [Google Sheets](https://sheets.google.com) support CSV export.
