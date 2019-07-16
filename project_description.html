@@ -1,0 +1,65 @@
+This is a plugin for Anki that enables you to perform updates to multiple fields across multiple notes in batch.  The updates to perform are imported from a CSV (comma-separated value) file.  This is similar to Anki's <b>Import</b> feature with the <i>Update existing notes</i> option selected.  The key differences are that this plugin:
+<ul>
+<li>Assumes the first line of the CSV is a header.</li>
+<li>Automatically maps columns in the CSV to note fields when the names match.</li>
+<li>Can perform a dry-run that logs all the changes that will be made before making them.</li>
+<li>Can generate a colorfull diff in an HTML file with red and green highlighting to clearly show what will be changed for each note.</li>
+<li>Logs all changes that have been made to a local SQLite3 database.  The full history can be exported to a CSV file so that old values can be recovered.</li>
+</ul>
+
+<b>Performing the Update</b>
+
+You need to prepare a CSV file with the updates to be made.  Most spreadsheet software such as Microsoft Excel and <a href="https://sheets.google.com">Google Sheets</a> support CSV export.
+
+Then select the notes in the browser that you want to update.  The plugin will <i>only</i> operate on notes that have been selected.  If you want to update all notes in the current view then just use Select All.  You can access the update dialog by clicking <i>Browse</i> to open the card browser and then clicking <i>Edit</i> -&gt; <i>Multi-field Batch Update</i> -&gt; <i>Import CSV</i>.  The dialog requires you to select some cards first.  These are the cards that will be updated.
+
+You need to specify how to match rows in the CSV file with your notes so that the plugin knows which row to use to update each note.  This is known as a join.  The <code>File Join Key</code> refers to a column in the CSV file.  The <code>Note Join Key</code> corresponds to a field in the note.  The plugin looks at the value <code>File Join Key</code> for each row and finds the note with the same value for its <code>Note Join Key</code>.
+
+Below this you need to choose how to map the remaining columns in the CSV file to fields in the note.  If you don't want to use a column from the CSV file then choose <code>-Nothing-</code> as the mapping.  This column will be ignored during the update procedure.
+
+For example, suppose you have a simple set of notes with only <code>Front</code> and <code>Back</code> and you want to update <code>Back</code> for a certain set of notes.  You could create a two-column CSV file consisting of <code>Front</code> and <code>Back</code> columns.  You would select <code>Front</code> for the <code>File Join Key</code> and <code>Front</code> for the <code>Note Join Key</code> as well.  Below this you would have <code>Back</code> in the file map to <code>Back</code> in the notes.  <code>Front</code> would map to <code>-Nothing-</code> because it is already been used as the join key.
+
+The plugin actually automatically maps columns in the CSV file to fields in the note when they share the same name.  So for the previous example you wouldn't have to make these selections because they would have already been selected for you.
+
+Below this is a log the dialog uses to inform you of what its doing.  Finally below this are the action buttons:
+
+<ul>
+<li>A <code>Dry-run</code> action logs all changes that would be made <b>without</b> taking any action.</li>
+<li>A <code>Diff</code> action produces a colorful HTML diff highlighting in green what will been added and in red what will be removed for each field that needs to be updated in each note.</li>
+<li>An <code>Update</code> action actually performs the changes.</li>
+</ul>
+
+In addition to joining based on a field in the note, the plugin also supports joining using the unique Note ID (<code>nid</code>).  For this it's recommended to have an <code>nid</code> column in the CSV file with the Note ID.  This is a more advanced feature, as you wouldn't typically have a CSV file with Note IDs unless you exported the data in some way.  However, this feature means that you could use the exported change log CSV to restore previous values.
+
+<b>Safety Features</b>
+
+There are some features to guard against accidental changes or bugs in the plugin:
+
+<ul>
+<li>Each batch of changes is recorded in the undo history within Anki.</li>
+<li>A full change log is kept in a SQLite database within the plugin's local directory.  Recent changes can be viewed in the UI and the full history of changes can be exported to a CSV file.  This enables you to recover any previous values altered by the plugin.</li>
+</ul>
+
+Despite these safety features, it's a good idea to back up or export your collection before using this plugin just to be safe.
+
+<b>Version History</b>
+
+<ul>
+<li>0.1: Initial Release</li>
+</ul>
+
+<b>License</b>
+
+Copyright 2019 Matthew Hayes
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
